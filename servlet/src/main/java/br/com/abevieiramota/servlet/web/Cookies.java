@@ -1,0 +1,26 @@
+package br.com.abevieiramota.servlet.web;
+
+import javax.servlet.http.Cookie;
+
+public class Cookies {
+
+	private final Cookie[] cookies;
+
+	public Cookies(Cookie[] cookies) {
+		this.cookies = cookies;
+	}
+
+	public Cookie buscaUsuarioLogado() {
+		Cookie cookieUsuarioLogado = null;
+		if (this.cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("usuario.logado")) {
+					cookieUsuarioLogado = cookie;
+				}
+			}
+		}
+		
+		return cookieUsuarioLogado;
+	}
+
+}

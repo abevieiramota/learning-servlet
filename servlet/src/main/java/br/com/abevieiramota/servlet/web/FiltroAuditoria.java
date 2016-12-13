@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @WebFilter("/*")
@@ -21,13 +22,19 @@ public class FiltroAuditoria implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
+
 		HttpServletRequest req = (HttpServletRequest) request;
 		String uri = req.getRequestURI();
-		
-		System.out.println("Usuário acessando " + uri);
-		
+		String usuario = getUsuario(req);
+
+		System.out.println("Usuário " + usuario + " acessando " + uri);
+
 		chain.doFilter(request, response);
+	}
+
+	private String getUsuario(HttpServletRequest req) {
+		Cookie cookie = new Cookies(req.getCookies()).buscaUsuarioLogado();
+		return cookie == null ? "deslogado" : cookie.getValue();
 	}
 
 	@Override

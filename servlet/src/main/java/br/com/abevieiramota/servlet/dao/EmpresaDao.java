@@ -26,9 +26,11 @@ public class EmpresaDao {
 		return database.values().stream().filter(p -> p.getNome().startsWith(filtro)).collect(Collectors.toList());
 	}
 
-	public void adiciona(String nomeEmpresa) {
+	public Empresa adiciona(String nomeEmpresa) {
 		Empresa empresa = new Empresa(_id.incrementAndGet(), nomeEmpresa);
 		database.put(empresa.getId(), empresa);
+		
+		return empresa;
 	}
 
 }

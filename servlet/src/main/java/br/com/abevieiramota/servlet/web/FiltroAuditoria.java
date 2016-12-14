@@ -12,6 +12,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import br.com.abevieiramota.servlet.model.Usuario;
+
 @WebFilter("/*")
 public class FiltroAuditoria implements Filter {
 
@@ -33,8 +35,9 @@ public class FiltroAuditoria implements Filter {
 	}
 
 	private String getUsuario(HttpServletRequest req) {
-		Cookie cookie = new Cookies(req.getCookies()).buscaUsuarioLogado();
-		return cookie == null ? "deslogado" : cookie.getValue();
+		Usuario usuario = (Usuario) req.getSession().getAttribute("usuarioLogado");
+		
+		return usuario == null ? "deslogado" : usuario.getEmail();
 	}
 
 	@Override
